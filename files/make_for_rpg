@@ -16,3 +16,4 @@ else
     echo -e "\t-\ta header description (arg 2)"
     echo -e "\t-\tthe binary name (arg3)"
     echo "(c) Created by Henry Letellier"
+fi
