@@ -20,6 +20,8 @@ class root:
     def __init__(self, name, lang, version, author, argc, argv):
         self.encoding = "utf-8"
         self.name = name
+        self.gen_a_makefile = True
+        self.gen_a_headerfile = True
         self.c_date = datetime.now().year
         self.filename = sys.argv[0]
         self.langage = lang
@@ -189,6 +191,9 @@ class get_launch_arguments(root):
                 print(f"\t-\t{self.filename} -cf <0 or 1>\tChange if to add (1) or not (0) the csfml libraries required for graphical compilation with the csfml library.")
                 print(f"\t-\t{self.filename} -o <no_space_name>\tChange the output name of the generated file after compilation\n\t\t\t(the default name is a.out)")
                 print(f"\t-\t{self.filename} -ccsfml <0 or 1>\tCheck (1) or not (0) for csfml function declarations.\n\t\t\t(by default: 0)")
+                print(f"\t-\t{self.filename} -nm\tDo not generate a makefile.")
+                print(f"\t-\t{self.filename} -nh\tDo not generate a headerfile.")
+
                 return True
         return False
 
@@ -294,6 +299,17 @@ class get_launch_arguments(root):
                     except ConversionError :
                         print("Failed to get the info csfml calls, it will thus, not be taken into account.")
 
+    def create_makefile(self):
+        """ Get if to create a makefile """
+        for i in range(self.argc):
+            if ("-nm" == self.argv[i].lower()):
+                self.gen_a_makefile = False
+
+    def create_headerfile(self):
+        """ Get if to create a headerfile """
+        for i in range(self.argc):
+            if ("-nh" == self.argv[i].lower()):
+                self.gen_a_headerfile = False
 
 class main_prog(root):
 
@@ -345,7 +361,9 @@ def check_inputs(self):
     get_launch_arguments.new_output(self)
     get_launch_arguments.change_path(self)
     get_launch_arguments.check_for_csfml(self)
+    get_launch_arguments.create_makefile(self)
     get_launch_arguments.makefile_bin_name(self)
+    get_launch_arguments.create_headerfile(self)
     get_launch_arguments.check_include_path(self)
     get_launch_arguments.get_makefile_header_title(self)
     get_launch_arguments.check_makefile_debug_line(self)
@@ -364,14 +382,10 @@ def main():
     result = get_file_data.sub_main(PI)
     csfml_declaration = result[0]
     c_declaration = result[1]
-    treat_makefile.create_makefile(RI)
-    # print(f"c_files_in_dir = {RI.c_files_in_dirs}\n");
-    treat_header.get_functions_for_the_header(RI, csfml_declaration, c_declaration)
-    # print(f"csfml_declaration = {csfml_declaration}\nc_declaration = {c_declaration}")
-    # print(f"\n\n\n\n self.header_functions = {RI.header_functions}\nlen(RI.header_functions) = {len(RI.header_functions)}")
-
-    # for i in range(len(RI.header_functions)):
-    #     print(RI.header_functions[i])
+    if (RI.gen_a_makefile == True):
+        treat_makefile.create_makefile(RI)
+    if (RI.gen_a_headerfile == True):
+        treat_header.get_functions_for_the_header(RI, csfml_declaration, c_declaration)
     print("Done.")
     print("Program (c) Created by Henry Letellier")
 
