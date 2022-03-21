@@ -2,3 +2,6 @@ include
 Makefile
 *.h
 *.c
+*.pyc
+*.sh
+compiler.sh

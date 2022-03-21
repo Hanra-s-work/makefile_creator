@@ -1,0 +1,14 @@
+#!/bin/bash
+##
+## EPITECH PROJECT, 2021
+## makefile_creator (Workspace)
+## File description:
+## enable_globaly.sh
+##
+
+chmod 777 makator
+cp makator /bin
+chmod 777 /bin/makator
+echo "The program has sucessefully been installed."
+echo "Enter makator -h for help."
+echo "(c) Created by Henry Letellier"

@@ -15,5 +15,6 @@ else
     echo -e "\t-\ta header title (arg 1)"
     echo -e "\t-\ta header description (arg 2)"
     echo -e "\t-\tthe binary name (arg3)"
+    echo "credits for the icon: https://www.flaticon.com/premium-icon/cog_4257801"
     echo "(c) Created by Henry Letellier"
 fi
