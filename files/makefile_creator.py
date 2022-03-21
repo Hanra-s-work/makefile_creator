@@ -12,52 +12,69 @@ __NAME__ = "Makefile creator"
 __LANG__ = "GB"
 
 import os, sys, platform
+from my_databases import databases as DB
+from get import get_file_data
 from datetime import datetime
 from xdrlib import ConversionError
-from get import get_file_data
 
 class root:
+    """ The class containing the local globals """
     def __init__(self, name, lang, version, author, argc, argv):
-        self.encoding = "utf-8"
-        self.name = name
-        self.gen_a_makefile = True
-        self.gen_a_headerfile = True
-        self.c_date = datetime.now().year
-        self.filename = sys.argv[0]
-        self.langage = lang
-        self.system = platform.system()
-        self.version = version
-        self.author = author
-        self.argc = argc
-        self.argv = argv
+        """ The local global variables """
+        # ----- Color management -----
         self.color_pallet = {}
+        self.colorise_output = True
+        self.wich_system = platform.system()
+        # ----- File management -----
+        self.encoding = "utf-8"
+        # ----- init vars -----
+        self.filename = sys.argv[0]
+        self.name = name
+        # ----- Makefile management -----
+        self.gen_a_makefile = True
+        self.include_csfml_flags = 0
         self.makefile_name = "Makefile"
-        self.makefile_header_title = "Makefile"
-        self.makefile_header_description = "jitter jitter"
         self.makefile_debug_line = False
+        self.makefile_binary_name = "a.out"
+        self.makefile_header_title = "Makefile"
+        self.check_for_csfml_declarations = False
+        self.makefile_header_description = "jitter jitter"
+        # ----- Headerfile management -----
+        self.include_folder = "./"
+        self.gen_a_headerfile = True
+        self.headerfile_name = "root.h"
         self.headerfile_header_title = "header"
         self.headerfile_header_description = "jitter jitter"
-        self.headerfile_name = "root.h"
+        # ----- miscellaneous -----
+        self.argc = argc
+        self.argv = argv
+        self.langage = lang
+        self.author = author
         self.scan_path = "./"
-        self.include_folder = "./"
-        self.include_csfml_flags = 0
-        self.makefile_binary_name = "a.out"
-        self.c_files_in_dirs = []
-        self.header_functions = []
-        self.check_for_csfml_declarations = False
+        self.version = version
+        self.system = platform.system()
+        self.c_date = datetime.now().year
         self.temp = []
         self.structs = []
+        self.c_files_in_dirs = []
+        self.header_functions = []
 
     def write_content(self, filename, content_list):
         """ Write content to a file """
-        file = open(f"{filename}", "w", encoding=self.encoding)
+        file_w = open(f"{filename}", "w", encoding=self.encoding)
         for i in range(len(content_list)):
-            file.write(content_list[i])
-        file.close()
+            file_w.write(content_list[i])
+        file_w.close()
 
-    def get_content(self, file):
+    def dump_content(self, filename, content):
+        """ Write content to a file without styling """
+        file_c = open(f"{filename}", "w", encoding=self.encoding)
+        file_c.write(f"{content}")
+        file_c.close()
+
+    def get_content(self, filepath):
         """ Get the content of a file """
-        f=open(file, "r", encoding="utf-8")
+        f=open(filepath, "r", encoding="utf-8")
         content = f.read()
         f.close()
         return content
@@ -201,6 +218,7 @@ class get_launch_arguments(root):
         """ check if the no color option is in the call """
         for i in range(self.argc):
             if ("-nc" in self.argv[i].lower() == True):
+                self.colorise_output = False
                 return True
         return False
 
@@ -311,17 +329,23 @@ class get_launch_arguments(root):
             if ("-nh" == self.argv[i].lower()):
                 self.gen_a_headerfile = False
 
-class main_prog(root):
+class color(root):
+    def display(self, color):
+        if (self.colorise_output == True):
+            if (self.wich_system == "Windows"):
+                os.system(f"{self.color_pallet[color]}")
+            else:
+                os.system(f"echo -e \"{self.color_pallet[color]}\"")
 
-    def init_color_pallet(self):
-        if (platform.system() != "Windows") :
+    def init_pallet(self):
+        if (self.wich_system != "Windows") :
             color_list = ["0 = 30","1 = 34","2 = 32","3 = 36","4 = 31","5 = 35","6 = 33","7 = 37","8 = 90","9 = 94","a = 92","b = 96","c = 91","d = 95","e = 93","f = 97","0"]
             color_list = ["30","34","32","36","31","35","33","37","90","94","92","96","91","95","93","97","0"]
             g=h=0
             for i in "0123456789ABCDEFr":
                 h=0
                 for b in "0123456789ABCDEFr":
-                    self.color_pallet[f"{i}{b}"]=f"\e[{color_list[g]}m;\e[{int(color_list[h])+10}m;"
+                    self.color_pallet[f"{i}{b}"]=f"\\e[{color_list[g]}m\\e[{int(color_list[h])+10}m"
                     h+=1
                 g+=1
         else:
@@ -329,13 +353,13 @@ class main_prog(root):
                 for b in "0123456789ABCDEFr":
                     if (i == 'r'):
                         if (b == 'r'):
-                            self.color_pallet[f"{i}{b}"] = f"0A"
+                            self.color_pallet[f"{i}{b}"] = f"color 0A"
                         else:
-                            self.color_pallet[f"{i}{b}"] = f"0{b}"
+                            self.color_pallet[f"{i}{b}"] = f"color 0{b}"
                     elif (b == 'r'):
-                        self.color_pallet[f"{i}{b}"] = f"{i}A"
+                        self.color_pallet[f"{i}{b}"] = f"color {i}A"
                     else:
-                        self.color_pallet[f"{i}{b}"] = f"{i}{b}"
+                        self.color_pallet[f"{i}{b}"] = f"color {i}{b}"
 
 
 RI = root(__NAME__,__LANG__,__VERSION__,__AUTHOR__,len(sys.argv),sys.argv)
@@ -347,7 +371,6 @@ def get_folders(scan_dir, dir_list):
         d = os.path.join(scan_dir, file)
         if os.path.isdir(d):
             dir_list.append(d)
-            # print(d)
             get_folders(d, dir_list)
     return dir_list
 
@@ -356,7 +379,7 @@ def check_inputs(self):
     if (get_launch_arguments.has_help(self) is True):
         return True
     if (get_launch_arguments.has_no_color(self) is False):
-        main_prog.init_color_pallet(self)
+        color.init_pallet(self)
     get_launch_arguments.has_oh(self)
     get_launch_arguments.new_output(self)
     get_launch_arguments.change_path(self)
@@ -378,15 +401,22 @@ def main():
     if (RI.argc > 1):
         if (check_inputs(RI) == True):
             return True
-
-    result = get_file_data.sub_main(PI)
-    csfml_declaration = result[0]
-    c_declaration = result[1]
+    # color.display(RI, "0A")
+    try:
+        result = get_file_data.sub_main(PI)
+        csfml_declaration = result[0]
+        c_declaration = result[1]
+    except:
+        DI = DB()
+        csfml_declaration = DI.csfml_declaration
+        c_declaration = DI.c_declaration
+    # root.dump_content(RI, "my_databases.py", f"#!/usr/bin/env python3\n##\n## EPITECH PROJECT, 2022\n## makefile creator - for PA and Leo\n## File description:\n## jitter jitter - created by (c) Henry Letellier\n##\n\nclass databases:\n    \"\"\" The class in charge of storing the lists \"\"\"\n    def __init__(self):\n        \"\"\" The variables for the csfml database \"\"\"\n        self.csfml_declaration = {csfml_declaration}\n        self.c_declaration = {c_declaration}\n")
     if (RI.gen_a_makefile == True):
         treat_makefile.create_makefile(RI)
     if (RI.gen_a_headerfile == True):
         treat_header.get_functions_for_the_header(RI, csfml_declaration, c_declaration)
     print("Done.")
     print("Program (c) Created by Henry Letellier")
+    # color.display(RI, "rr")
 
 main()

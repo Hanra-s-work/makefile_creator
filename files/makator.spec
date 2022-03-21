@@ -4,7 +4,7 @@
 block_cipher = None
 
 
-a = Analysis(['makefile_creator.py', 'get.py'],
+a = Analysis(['makefile_creator.py', 'get.py', 'my_databases.py'],
              pathex=[],
              binaries=[],
              datas=[],
