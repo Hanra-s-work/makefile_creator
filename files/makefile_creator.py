@@ -34,6 +34,7 @@ class root:
         self.gen_a_makefile = True
         self.include_csfml_flags = 0
         self.makefile_name = "Makefile"
+        self.silent_makefile = ""
         self.makefile_debug_line = False
         self.makefile_binary_name = "a.out"
         self.makefile_header_title = "Makefile"
@@ -174,14 +175,14 @@ class treat_makefile(root):
         makefile_content.append(f"NAME\t=\t{self.makefile_binary_name}\n\n")
         makefile_content.append("all:\t$(NAME)\n\n")
         if (self.include_csfml_flags == 1):
-            makefile_content.append("$(NAME):\t$(OBJ)\n\t@gcc -o $(NAME) $(OBJ) $(CFLAGS) $(CPPFLAGS) $(CSFMLFLAGS)\n")
+            makefile_content.append(f"$(NAME):\t$(OBJ)\n\t{self.silent_makefile}gcc -o $(NAME) $(OBJ) $(CFLAGS) $(CPPFLAGS) $(CSFMLFLAGS)\n")
         else:
-            makefile_content.append("$(NAME):\t$(OBJ)\n\t@gcc -o $(NAME) $(OBJ) $(CFLAGS) $(CPPFLAGS)\n")
-        makefile_content.append("\t@make clean\n\n")
+            makefile_content.append(f"$(NAME):\t$(OBJ)\n\t{self.silent_makefile}gcc -o $(NAME) $(OBJ) $(CFLAGS) $(CPPFLAGS)\n")
+        makefile_content.append(f"\t{self.silent_makefile}make clean\n\n")
         if (self.makefile_debug_line == True):
-            makefile_content.append("debug:\n\t$(CC) $(CPPPFLAGS) -o $(NAME) $(SRC)\n\t@make clean\n\n")
-        makefile_content.append("clean:\n\t@rm -f $(OBJ)\n\n")
-        makefile_content.append("fclean: clean\n\t@rm -f $(NAME)\n\t@rm unit_tests\n\n")
+            makefile_content.append(f"debug:\n\t$(CC) $(CPPPFLAGS) -o $(NAME) $(SRC)\n\t{self.silent_makefile}make clean\n\n")
+        makefile_content.append(f"clean:\n\t{self.silent_makefile}rm -f $(OBJ)\n\n")
+        makefile_content.append(f"fclean: clean\n\t{self.silent_makefile}rm -f $(NAME)\n\t{self.silent_makefile}rm unit_tests\n\n")
         makefile_content.append("re: fclean all clean\n\n")
         makefile_content.append(".PHONY: fclean all clean re\n\n")
         root.write_content(self, self.makefile_name, makefile_content)
@@ -191,7 +192,7 @@ class get_launch_arguments(root):
     def has_help(self):
         """ check if the help symbols are in the call """
         for i in range(self.argc):
-            if ("-h" in self.argv[i].lower() or "-help" in self.argv[i].lower() or "--help" in self.argv[i].lower() or "\\?" in self.argv[i].lower() or "\\\?" in self.argv[i].lower() or "/?" in self.argv[i].lower() or "///?" in self.argv[i].lower() or "-?" in self.argv[i].lower() or "?" in self.argv[i].lower()):
+            if ("-h" in self.argv[i].lower() or "-help" in self.argv[i].lower() or "--help" in self.argv[i].lower() or "\\?" in self.argv[i].lower() or "/?" in self.argv[i].lower() or "///?" in self.argv[i].lower() or "-?" in self.argv[i].lower() or "?" in self.argv[i].lower()):
                 print("HELP SECTION:")
                 print(f"USAGE:\n\t-\t{self.filename}\tRun the generator (the default name will be Makefile")
                 print(f"\t-\t{self.filename} -h (or --help)\t Display this help section")
@@ -208,6 +209,7 @@ class get_launch_arguments(root):
                 print(f"\t-\t{self.filename} -cf <0 or 1>\tChange if to add (1) or not (0) the csfml libraries required for graphical compilation with the csfml library.")
                 print(f"\t-\t{self.filename} -o <no_space_name>\tChange the output name of the generated file after compilation\n\t\t\t(the default name is a.out)")
                 print(f"\t-\t{self.filename} -ccsfml <0 or 1>\tCheck (1) or not (0) for csfml function declarations.\n\t\t\t(by default: 0)")
+                print(f"\t-\t{self.filename} -s \tSilence the makefile.")
                 print(f"\t-\t{self.filename} -nm\tDo not generate a makefile.")
                 print(f"\t-\t{self.filename} -nh\tDo not generate a headerfile.")
 
@@ -329,6 +331,12 @@ class get_launch_arguments(root):
             if ("-nh" == self.argv[i].lower()):
                 self.gen_a_headerfile = False
 
+    def silence_the_makefile(self):
+        """ Get if to create a headerfile """
+        for i in range(self.argc):
+            if ("-s" == self.argv[i].lower()):
+                self.silent_makefile = "@"
+
 class color(root):
     def display(self, color):
         if (self.colorise_output == True):
@@ -388,6 +396,7 @@ def check_inputs(self):
     get_launch_arguments.makefile_bin_name(self)
     get_launch_arguments.create_headerfile(self)
     get_launch_arguments.check_include_path(self)
+    get_launch_arguments.silence_the_makefile(self)
     get_launch_arguments.get_makefile_header_title(self)
     get_launch_arguments.check_makefile_debug_line(self)
     get_launch_arguments.get_header_file_header_title(self)
