@@ -151,7 +151,7 @@ class treat_makefile(root):
                 if ("c" == temp[len(temp)-1] and os.path.isdir(f"{folders[i]}/{content[b]}") == False):
                     self.c_files_in_dirs.append(f"{folders[i]}/{content[b]}")
 
-    def create_makefile(self):
+    def create_makefile(self) -> None:
         """ generate the content and write it to the makefile """
         treat_makefile.get_files_for_makefile(self)
         makefile_content = [f"##\n## EPITECH PROJECT, {self.c_date}\n## {self.makefile_header_title}\n## File description:\n## {self.makefile_header_description}\n##\n\n"]
