@@ -142,6 +142,7 @@ class treat_makefile(root):
         """ get the files in the directory """
         self.c_files_in_dirs = []
         folders = []
+        folders.append(".")
         folders = get_folders(self.scan_path, folders)
         for i in range(len(folders)):
             content = os.listdir(folders[i])
@@ -160,10 +161,10 @@ class treat_makefile(root):
                 makefile_content.append(f"SRC\t=\t{self.c_files_in_dirs[i]}\t\\\n")
                 SRC_used = True
             elif i == len(self.c_files_in_dirs)-1:
-                makefile_content.append(f"\t\t{self.c_files_in_dirs[i]}\n\n")
+                makefile_content.append(f"\t\t{self.c_files_in_dirs[i]}\n")
             else:
                 makefile_content.append(f"\t\t{self.c_files_in_dirs[i]}\t\\\n")
-        makefile_content.append("OBJ\t=\t$(SRC:.c=.o)\n\n")
+        makefile_content.append("\nOBJ\t=\t$(SRC:.c=.o)\n\n")
         makefile_content.append("REM\t=\t*.gcno\t\\\n\t\t*.gcda\n\n")
         makefile_content.append("CC\t=\tgcc\n\n")
         makefile_content.append("CFLAGS\t=\t-Wall -Wextra\n\n")
@@ -175,9 +176,9 @@ class treat_makefile(root):
         makefile_content.append(f"NAME\t=\t{self.makefile_binary_name}\n\n")
         makefile_content.append("all:\t$(NAME)\n\n")
         if (self.include_csfml_flags == 1):
-            makefile_content.append(f"$(NAME):\t$(OBJ)\n\t{self.silent_makefile}gcc -o $(NAME) $(OBJ) $(CFLAGS) $(CPPFLAGS) $(CSFMLFLAGS)\n")
+            makefile_content.append(f"$(NAME):\t$(OBJ)\n\t{self.silent_makefile}$(CC) -o $(NAME) $(OBJ) $(CFLAGS) $(CPPFLAGS) $(CSFMLFLAGS)\n")
         else:
-            makefile_content.append(f"$(NAME):\t$(OBJ)\n\t{self.silent_makefile}gcc -o $(NAME) $(OBJ) $(CFLAGS) $(CPPFLAGS)\n")
+            makefile_content.append(f"$(NAME):\t$(OBJ)\n\t{self.silent_makefile}$(CC) -o $(NAME) $(OBJ) $(CFLAGS) $(CPPFLAGS)\n")
         makefile_content.append(f"\t{self.silent_makefile}make clean\n\n")
         if (self.makefile_debug_line == True):
             makefile_content.append(f"debug:\n\t$(CC) $(CPPPFLAGS) -o $(NAME) $(SRC)\n\t{self.silent_makefile}make clean\n\n")

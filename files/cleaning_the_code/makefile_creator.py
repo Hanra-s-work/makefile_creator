@@ -155,6 +155,7 @@ class treat_makefile(root):
         treat_makefile.get_files_for_makefile(self)
         makefile_content = [f"##\n## EPITECH PROJECT, {self.c_date}\n## {self.makefile_header_title}\n## File description:\n## {self.makefile_header_description}\n##\n\n"]
         SRC_used = False
+        print(f"SRC content = {self.c_files_in_dirs}")
         for i in range(len(self.c_files_in_dirs)):
             if (SRC_used == False):
                 makefile_content.append(f"SRC\t=\t{self.c_files_in_dirs[i]}\t\\\n")
@@ -164,6 +165,7 @@ class treat_makefile(root):
             else:
                 makefile_content.append(f"\t\t{self.c_files_in_dirs[i]}\t\\\n")
         makefile_content.append("OBJ\t=\t$(SRC:.c=.o)\n\n")
+        print(f"Makefile content = {makefile_content}")
         makefile_content.append("REM\t=\t*.gcno\t\\\n\t\t*.gcda\n\n")
         makefile_content.append("CC\t=\tgcc\n\n")
         makefile_content.append("CFLAGS\t=\t-Wall -Wextra\n\n")
