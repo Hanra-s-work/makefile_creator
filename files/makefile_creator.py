@@ -181,10 +181,10 @@ class treat_makefile(root):
         else:
             makefile_content.append(f"$(NAME):\t$(OBJ)\n\t{self.silent_makefile}$(CC) -o $(NAME) $(OBJ) $(CFLAGS) $(CPPFLAGS)\n")
         if (self.clean_object_files == True):
-            makefile_content.append(f"\t{self.silent_makefile}make clean\n\n")
+            makefile_content.append(f"\t{self.silent_makefile}make clean\n")
         if (self.makefile_debug_line == True):
-            makefile_content.append(f"debug:\n\t$(CC) $(CPPPFLAGS) -o $(NAME) $(SRC)\n\t{self.silent_makefile}make clean\n\n")
-        makefile_content.append(f"clean:\n\t{self.silent_makefile}rm -f $(OBJ)\n\n")
+            makefile_content.append(f"\ndebug:\n\t$(CC) $(CPPPFLAGS) -o $(NAME) $(SRC)\n\t{self.silent_makefile}make clean\n\n")
+        makefile_content.append(f"\nclean:\n\t{self.silent_makefile}rm -f $(OBJ)\n\n")
         makefile_content.append(f"fclean: clean\n\t{self.silent_makefile}rm -f $(NAME)\n\t{self.silent_makefile}rm unit_tests\n\n")
         makefile_content.append("re: fclean all clean\n\n")
         makefile_content.append(".PHONY: fclean all clean re\n\n")
