@@ -9,7 +9,7 @@
 chmod 777 makator
 if [ $# -eq 3 ]
 then
-    ./makator -nh -mt $1 -md $2 -mgdb 1 -cf 1 -o $3 -ccsfml 1
+    ./makator -nh -mt $1 -md $2 -mgdb 1 -cf 1 -o $3 -ccsfml -co 1
 else
     echo "Please enter:"
     echo -e "\t-\ta header title (arg 1)"

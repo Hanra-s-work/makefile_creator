@@ -35,6 +35,7 @@ class root:
         self.include_csfml_flags = 0
         self.makefile_name = "Makefile"
         self.silent_makefile = ""
+        self.clean_object_files = False
         self.makefile_debug_line = False
         self.makefile_binary_name = "a.out"
         self.makefile_header_title = "Makefile"
@@ -142,6 +143,7 @@ class treat_makefile(root):
         """ get the files in the directory """
         self.c_files_in_dirs = []
         folders = []
+        folders.append(".")
         folders = get_folders(self.scan_path, folders)
         for i in range(len(folders)):
             content = os.listdir(folders[i])
@@ -150,22 +152,20 @@ class treat_makefile(root):
                 if ("c" == temp[len(temp)-1] and os.path.isdir(f"{folders[i]}/{content[b]}") == False):
                     self.c_files_in_dirs.append(f"{folders[i]}/{content[b]}")
 
-    def create_makefile(self):
+    def create_makefile(self) -> None:
         """ generate the content and write it to the makefile """
         treat_makefile.get_files_for_makefile(self)
         makefile_content = [f"##\n## EPITECH PROJECT, {self.c_date}\n## {self.makefile_header_title}\n## File description:\n## {self.makefile_header_description}\n##\n\n"]
         SRC_used = False
-        print(f"SRC content = {self.c_files_in_dirs}")
         for i in range(len(self.c_files_in_dirs)):
             if (SRC_used == False):
                 makefile_content.append(f"SRC\t=\t{self.c_files_in_dirs[i]}\t\\\n")
                 SRC_used = True
             elif i == len(self.c_files_in_dirs)-1:
-                makefile_content.append(f"\t\t{self.c_files_in_dirs[i]}\n\n")
+                makefile_content.append(f"\t\t{self.c_files_in_dirs[i]}\n")
             else:
                 makefile_content.append(f"\t\t{self.c_files_in_dirs[i]}\t\\\n")
-        makefile_content.append("OBJ\t=\t$(SRC:.c=.o)\n\n")
-        print(f"Makefile content = {makefile_content}")
+        makefile_content.append("\nOBJ\t=\t$(SRC:.c=.o)\n\n")
         makefile_content.append("REM\t=\t*.gcno\t\\\n\t\t*.gcda\n\n")
         makefile_content.append("CC\t=\tgcc\n\n")
         makefile_content.append("CFLAGS\t=\t-Wall -Wextra\n\n")
@@ -180,7 +180,8 @@ class treat_makefile(root):
             makefile_content.append(f"$(NAME):\t$(OBJ)\n\t{self.silent_makefile}$(CC) -o $(NAME) $(OBJ) $(CFLAGS) $(CPPFLAGS) $(CSFMLFLAGS)\n")
         else:
             makefile_content.append(f"$(NAME):\t$(OBJ)\n\t{self.silent_makefile}$(CC) -o $(NAME) $(OBJ) $(CFLAGS) $(CPPFLAGS)\n")
-        makefile_content.append(f"\t{self.silent_makefile}make clean\n\n")
+        if (self.clean_object_files == True):
+            makefile_content.append(f"\t{self.silent_makefile}make clean\n\n")
         if (self.makefile_debug_line == True):
             makefile_content.append(f"debug:\n\t$(CC) $(CPPPFLAGS) -o $(NAME) $(SRC)\n\t{self.silent_makefile}make clean\n\n")
         makefile_content.append(f"clean:\n\t{self.silent_makefile}rm -f $(OBJ)\n\n")
@@ -211,6 +212,7 @@ class get_launch_arguments(root):
                 print(f"\t-\t{self.filename} -cf <0 or 1>\tChange if to add (1) or not (0) the csfml libraries required for graphical compilation with the csfml library.")
                 print(f"\t-\t{self.filename} -o <no_space_name>\tChange the output name of the generated file after compilation\n\t\t\t(the default name is a.out)")
                 print(f"\t-\t{self.filename} -ccsfml <0 or 1>\tCheck (1) or not (0) for csfml function declarations.\n\t\t\t(by default: 0)")
+                print(f"\t-\t{self.filename} -co\tClean the object files during the compilation.")
                 print(f"\t-\t{self.filename} -s \tSilence the makefile.")
                 print(f"\t-\t{self.filename} -nm\tDo not generate a makefile.")
                 print(f"\t-\t{self.filename} -nh\tDo not generate a headerfile.")
@@ -339,6 +341,12 @@ class get_launch_arguments(root):
             if ("-s" == self.argv[i].lower()):
                 self.silent_makefile = "@"
 
+    def clean_object_files_for_the_makefile(self):
+        """ Get if to create a headerfile """
+        for i in range(self.argc):
+            if ("-co" == self.argv[i].lower()):
+                self.clean_object_files = True
+
 class color(root):
     def display(self, color):
         if (self.colorise_output == True):
@@ -405,6 +413,7 @@ def check_inputs(self):
     get_launch_arguments.get_makefile_header_description(self)
     get_launch_arguments.check_if_to_include_csfml_flags(self)
     get_launch_arguments.get_header_file_header_description(self)
+    get_launch_arguments.clean_object_files_for_the_makefile(self)
     return False
 
 def main():
