@@ -5,3 +5,4 @@ Makefile
 *.pyc
 *.sh
 compiler.sh
+.vscode/*
