@@ -1,0 +1,99 @@
+{
+    "icon_windows": "icon/cog.ico",
+    "icon_linux": "icon/cog.png",
+    "icon_mac": "icon/cog.png",
+    "binary_name": "makator",
+    "windows_extension": ".exe",
+    "linux_extension": ".bin",
+    "mac_extension": ".bin",
+    "onefile": true,
+    "compilation_files": [
+        "makefile_creator.py",
+        "get.py",
+        "my_databases.py"
+    ],
+    "json_field_descriptions": {
+        "why_no_comments": "Comments are not supported by the json general json parsers.",
+        "icon_windows": {
+            "description": "Icon for windows, format .ico",
+            "type": "string",
+            "default": "icon/cog.ico",
+            "required": true,
+            "file_format": ".ico",
+            "file_resolution": {
+                "width": "256",
+                "height": "256"
+            }
+        },
+        "icon_linux": {
+            "description": "Icon for linux, format .png",
+            "type": "string",
+            "default": "icon/cog.png",
+            "required": true,
+            "file_format": ".png",
+            "file_resolution": {
+                "width": "256",
+                "height": "256"
+            }
+        },
+        "icon_mac": {
+            "description": "Icon for mac, format .png",
+            "type": "string",
+            "default": "icon/cog.png",
+            "required": true,
+            "file_format": ".png",
+            "file_resolution": {
+                "width": "256",
+                "height": "256"
+            }
+        },
+        "binary_name": {
+            "description": "Name of binary, without extension",
+            "type": "string",
+            "default": "makator",
+            "required": true,
+            "role": "contains the name of the binary version of the program"
+        },
+        "windows_extension": {
+            "description": "Extension for windows, format .exe",
+            "type": "string",
+            "default": ".exe",
+            "required": true,
+            "role": "contains the extension type of the binary version for when the program will be compiled under a windows environment"
+        },
+        "linux_extension": {
+            "description": "Extension for linux, format .bin",
+            "type": "string",
+            "default": ".bin",
+            "required": true,
+            "role": "contains the extension type of the binary version for when the program will be compiled under a linux environment"
+        },
+        "mac_extension": {
+            "description": "Extension for mac, format .bin",
+            "type": "string",
+            "default": ".bin",
+            "required": true,
+            "role": "contains the extension type of the binary version for when the program will be compiled under a mac environment"
+        },
+        "onefile": {
+            "description": "Onefile mode, true or false",
+            "type": "boolean",
+            "default": true,
+            "required": true,
+            "role": "Indicate if you would like to have a compact executable or a program in a folder"
+        },
+        "compilation_files": {
+            "description": "Files to be used for compilation",
+            "type": "array",
+            "default": [
+                "makefile_creator.py",
+                "get.py",
+                "my_databases.py"
+            ],
+            "required": true,
+            "role": "contains the files that will be used to compile the program",
+            "file_format": ".py",
+            "important": "The order in the array matters"
+        }
+    }
+}

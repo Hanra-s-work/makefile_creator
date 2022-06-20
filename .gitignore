@@ -1,4 +1,4 @@
-include
+include/*
 Makefile
 *.h
 *.c
@@ -6,3 +6,4 @@ Makefile
 *.sh
 # compiler.sh
 .vscode/*
+build/*
