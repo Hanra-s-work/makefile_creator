@@ -1,0 +1,14 @@
+#!/usr/bin/env python3
+##
+## EPITECH PROJECT, 2022
+## makefile creator - for PA and Leo
+## File description:
+## jitter jitter - created by (c) Henry Letellier
+##
+
+class databases:
+    """ The class in charge of storing the lists """
+    def __init__(self):
+        """ The variables for the csfml database """
+        self.csfml_declaration = ['sfInt8', 'sfUint8', 'sfInt16', 'sfUint16', 'sfInt32', 'sfUint32', 'sfInt64', 'sfUint64', 'sfBool', 'sfVector2i', 'sfVector2u', 'sfVector2f', 'sfGlslVec2', 'sfGlslIvec2', 'sfGlslBvec2', 'sfVector3f', 'sfGlslVec3', 'sfGlslIvec3', 'sfGlslBvec3', 'sfGlslMat3', 'sfGlslVec4', 'sfGlslIvec4', 'sfGlslBvec4', 'sfGlslMat4', 'sfFloatRect', 'sfIntRect', 'sfTime', 'sfClock', 'sfEvent', 'sfWindow', 'sfCursor', 'sfContext', 'sfTimeSpan', 'sfKeyEvent', 'sfTextEvent', 'sfSizeEvent', 'sfEventType', 'sfCursorType', 'sfTouchEvent', 'sfSensorEvent', 'sfMouseMoveEvent', 'sfContextSettings', 'sfMouseWheelEvent', 'sfMouseButtonEvent', 'sfJoystickMoveEvent', 'sfJoystickButtonEvent', 'sfJoystickConnectEvent', 'sfMouseWheelScrollEvent', 'sfMusic', 'sfSound', 'sfSoundStatus', 'sfSoundBuffer', 'sfInputStream', 'sfSoundStream', 'sfSoundRecorder', 'sfSoundStreamChunk', 'sfSoundBufferRecorder', 'sfSoundStreamSeekCallback', 'sfSoundRecorderStopCallback', 'sfSoundStreamGetDataCallback', 'sfSoundRecorderStartCallback', 'sfSoundRecorderProcessCallback', 'sfVideoMode', 'sfWindowStyle', 'sfWindowHandle', 'sfContextSettings', 'sfContextSettings', 'sfContextAttribute', 'sfKeyCode', 'sfSensorType', 'sfMouseWheel', 'sfMouseButton', 'sfJoystickAxis', 'sfJoystickIdentification', 'sfFtp', 'sfHttp', 'sfPacket', 'sfFtpStatus', 'sfIpAddress', 'sfTcpSocket', 'sfUdpSocket', 'sfHttpMethod', 'sfHttpStatus', 'sfHttpRequest', 'sfFtpResponse', 'sfTcpListener', 'sfSocketStatus', 'sfHttpResponse', 'sfSocketSelector', 'sfFtpTransferMode', 'sfFtpListingResponse', 'sfFtpDirectoryResponse', 'sfView', 'sfFont', 'sfText', 'sfColor', 'sfShape', 'sfImage', 'sfGlyph', 'sfSprite', 'sfVertex', 'sfShader', 'sfTexture', 'sfFontInfo', 'sfTextStyle', 'sfTransform', 'sfCircleShape', 'sfBlendFactor', 'sfConvexShape', 'sfVertexArray', 'sfVertexBuffer', 'sfRenderStates', 'sfRenderWindow', 'sfBlendEquation', 'sfTransformable', 'sfPrimitiveType', 'sfRenderTexture', 'sfBlendEquation', 'sfRectangleShape', 'sfVertexBufferUsage', 'sfRendsfShapeerStates', 'sfShapeGetPointCallback', 'sfShapeGetPointCountCallback']
+        self.c_declaration = ['_t', 'int', 'char', 'long', 'void', 'enum', 'float', 'short', 'double', 'signed', 'unsigned', 'long int', 'short int', 'long long', 'const char', 'signed int', 'static char', 'signed char', 'signed long', 'long double', 'unsigned int', 'signed short', 'unsigned char', 'unsigned long', 'long long int', 'unsigned short', 'signed long int', 'signed long long', 'signed short int', 'unsigned long int', 'unsigned short int', 'unsigned long long', 'signed long long int', 'unsigned long long int']
