@@ -1,0 +1,20 @@
+#!/bin/bash
+##
+## EPITECH PROJECT, 2021
+## makefile_creator (Workspace)
+## File description:
+## make_for_rpg
+##
+
+chmod 777 makefile_creator.py
+if [ $# -eq 3 ]
+then
+    ./makefile_creator.py -nh -mt $1 -md $2 -mgdb 1 -cf 1 -o $3 -ccsfml 1
+else
+    echo "Please enter:"
+    echo -e "\t-\ta header title (arg 1)"
+    echo -e "\t-\ta header description (arg 2)"
+    echo -e "\t-\tthe binary name (arg3)"
+    echo "credits for the icon: https://www.flaticon.com/premium-icon/cog_4257801"
+    echo "(c) Created by Henry Letellier"
+fi
