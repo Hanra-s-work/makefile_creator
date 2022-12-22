@@ -1,0 +1,3 @@
+CPPFLAGS = -shared
+CFLAGS = -shared
+gcc -shared -o libname.so $(OBJ)
