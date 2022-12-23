@@ -59,7 +59,7 @@ paramiko == 2.11.0
 pexpect == 4.8.0
 pid == 2.2.3
 Pillow == 9.3.0
-pip == 21.0.1
+pip == 21.1
 platformdirs == 2.5.2
 ply == 3.11
 productmd == 1.33
