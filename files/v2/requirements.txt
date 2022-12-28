@@ -103,7 +103,7 @@ sepolicy == 3.2
 setools == 4.4.0
 setproctitle == 1.1.10
 setroubleshoot == 1.1
-setuptools == 53.0.0
+setuptools == 65.5.1
 simpleaudio == 1.0.4
 simpleline == 1.8
 six == 1.15.0
