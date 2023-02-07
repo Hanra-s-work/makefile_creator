@@ -3,7 +3,7 @@ Makefile
 *.h
 *.c
 *.pyc
-*.sh
+files/v1/*.sh
 # compiler.sh
 .vscode/*
 build/*

@@ -1,0 +1,11 @@
+Name;description;link
+Makefile Conventions;The norms for a makefile;https://www.gnu.org/prep/standards/html_node/Makefile-Conventions.html
+Makefile Conventions;The norms for a makefile;http://www.math.utah.edu/docs/info/standards_5.html
+Standard targets in Makefiles;The norms for a makefile;https://rebelsky.cs.grinnell.edu/musings/cnix-make-standard-targets
+Make et Makefile : petit résume rapide;The norms for a makefile;https://perso.univ-lyon1.fr/jean-claude.iehl/Public/educ/Makefile.html
+Is there a naming convention for makefile targets and variables;The norms for a makefile;https://stackoverflow.com/questions/32130664/is-there-a-naming-convention-for-makefile-targets-and-variables
+Tutorial on writing makefiles;The norms for a makefile;https://www.math.colostate.edu/~yzhou/computer/writemakefile.html
+Makefiles and compilation rules;The norms for a makefile;https://www.lrde.epita.fr/~raph/docs/epita-css/codingstyle/Makefiles-and-compilation-rules.html
+;;
+Curses Programming with Python;python curses library;https://docs.python.org/3/howto/curses.html
+curses — Terminal handling for character-cell displays;python curses library;https://docs.python.org/3/library/curses.html#module-curses
