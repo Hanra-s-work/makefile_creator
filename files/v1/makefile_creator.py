@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 ##
-## EPITECH PROJECT, 2022
-## makefile creator - for PA and Leo
-## File description:
-## jitter jitter - created by (c) Henry Letellier
+# EPITECH PROJECT, 2022
+# makefile creator - for PA and Leo
+# File description:
+# jitter jitter - created by (c) Henry Letellier
 ##
 
 __VERSION__ = "1.0.0.0.0.0.0.0.0.0.0"
@@ -11,14 +11,18 @@ __AUTHOR__ = "Henry Letellier"
 __NAME__ = "Makefile creator"
 __LANG__ = "GB"
 
-import os, sys, platform
+import os
+import sys
+import platform
 from my_databases import databases as DB
 from get import get_file_data
 from datetime import datetime
 from xdrlib import ConversionError
 
+
 class root:
     """ The class containing the local globals """
+
     def __init__(self, name, lang, version, author, argc, argv):
         """ The local global variables """
         # ----- Color management -----
@@ -63,7 +67,7 @@ class root:
 
     def write_content(self, filename, content_list):
         """ Write content to a file """
-        file_w = open(f"{filename}", "w", encoding=self.encoding)
+        file_w = open(f"{filename}", "w", encoding=self.encoding, newline='\n')
         for i in range(len(content_list)):
             file_w.write(content_list[i])
         file_w.close()
@@ -76,22 +80,25 @@ class root:
 
     def get_content(self, filepath):
         """ Get the content of a file """
-        f=open(filepath, "r", encoding="utf-8")
+        f = open(filepath, "r", encoding="utf-8")
         content = f.read()
         f.close()
         return content
 
+
 class treat_header(root):
     """ This class contains the functions required to create and fill a headerfile """
+
     def compiling_all(self):
         """ Compile all the data gathered into a list and write it to a file """
-        compiled = [f"/*\n** EPITECH PROJECT, {self.c_date}\n** {self.headerfile_header_title}\n** File description:\n** {self.headerfile_header_description}\n*/\n\n"]
+        compiled = [
+            f"/*\n** EPITECH PROJECT, {self.c_date}\n** {self.headerfile_header_title}\n** File description:\n** {self.headerfile_header_description}\n*/\n\n"]
         temp = ''
         for i in self.headerfile_name.upper():
             if i == ' ' or i == '.':
-                temp+='_'
+                temp += '_'
             else:
-                temp+=i
+                temp += i
         compiled.append(f"#ifndef {temp}_\n\t#define {temp}_\n")
         for i in range(len(self.structs)):
             compiled.append(f"{self.structs[i]}\n")
@@ -137,8 +144,10 @@ class treat_header(root):
         if (os.path.exists(f"{self.include_folder}/include") == False):
             os.mkdir(f"{self.include_folder}/include")
 
+
 class treat_makefile(root):
     """ This class contains the functions required to create and fill a makefile """
+
     def get_files_for_makefile(self):
         """ get the files in the directory """
         self.c_files_in_dirs = []
@@ -155,7 +164,8 @@ class treat_makefile(root):
     def create_makefile(self) -> None:
         """ generate the content and write it to the makefile """
         treat_makefile.get_files_for_makefile(self)
-        makefile_content = [f"##\n## EPITECH PROJECT, {self.c_date}\n## {self.makefile_header_title}\n## File description:\n## {self.makefile_header_description}\n##\n\n"]
+        makefile_content = [
+            f"##\n## EPITECH PROJECT, {self.c_date}\n## {self.makefile_header_title}\n## File description:\n## {self.makefile_header_description}\n##\n\n"]
         SRC_used = False
         for i in range(len(self.c_files_in_dirs)):
             if (SRC_used == False):
@@ -172,26 +182,32 @@ class treat_makefile(root):
         makefile_content.append("CPPFLAGS\t=\t-I./include\n\n")
         if (self.makefile_debug_line == True):
             makefile_content.append("CPPPFLAGS\t=\t-Wall -Wextra -g3\n\n")
-        if (self.include_csfml_flags == 1) :
+        if (self.include_csfml_flags == 1):
             makefile_content.append("CSFMLFLAGS\t=\t-lcsfml-graphics -lcsfml-audio -lcsfml-system -lcsfml-window\n\n")
         makefile_content.append(f"NAME\t=\t{self.makefile_binary_name}\n\n")
         makefile_content.append("all:\t$(NAME)\n\n")
         if (self.include_csfml_flags == 1):
-            makefile_content.append(f"$(NAME):\t$(OBJ)\n\t{self.silent_makefile}$(CC) -o $(NAME) $(OBJ) $(CFLAGS) $(CPPFLAGS) $(CSFMLFLAGS)\n")
+            makefile_content.append(
+                f"$(NAME):\t$(OBJ)\n\t{self.silent_makefile}$(CC) -o $(NAME) $(OBJ) $(CFLAGS) $(CPPFLAGS) $(CSFMLFLAGS)\n")
         else:
-            makefile_content.append(f"$(NAME):\t$(OBJ)\n\t{self.silent_makefile}$(CC) -o $(NAME) $(OBJ) $(CFLAGS) $(CPPFLAGS)\n")
+            makefile_content.append(
+                f"$(NAME):\t$(OBJ)\n\t{self.silent_makefile}$(CC) -o $(NAME) $(OBJ) $(CFLAGS) $(CPPFLAGS)\n")
         if (self.clean_object_files == True):
             makefile_content.append(f"\t{self.silent_makefile}make clean\n")
         if (self.makefile_debug_line == True):
-            makefile_content.append(f"\ndebug:\n\t$(CC) $(CPPPFLAGS) -o $(NAME) $(SRC)\n\t{self.silent_makefile}make clean\n\n")
+            makefile_content.append(
+                f"\ndebug:\n\t$(CC) $(CPPPFLAGS) -o $(NAME) $(SRC)\n\t{self.silent_makefile}make clean\n\n")
         makefile_content.append(f"\nclean:\n\t{self.silent_makefile}rm -f $(OBJ)\n\n")
-        makefile_content.append(f"fclean: clean\n\t{self.silent_makefile}rm -f $(NAME)\n\t{self.silent_makefile}rm unit_tests\n\n")
+        makefile_content.append(
+            f"fclean: clean\n\t{self.silent_makefile}rm -f $(NAME)\n\t{self.silent_makefile}rm unit_tests\n\n")
         makefile_content.append("re: fclean all clean\n\n")
         makefile_content.append(".PHONY: fclean all clean re\n\n")
         root.write_content(self, self.makefile_name, makefile_content)
 
+
 class get_launch_arguments(root):
     """ a class in charge of treating the input arguments """
+
     def has_help(self):
         """ check if the help symbols are in the call """
         for i in range(self.argc):
@@ -205,13 +221,18 @@ class get_launch_arguments(root):
                 print(f"\t-\t{self.filename} -p <path>\tChange the directory in wich the program starts scanning\n\t\t\t(The default path is the directory in wich the program is running)")
                 print(f"\t-\t{self.filename} -hf <path>\tChange the directory in wich the include folder is \n\t\t\t(if the include folder it not existent it will be created)")
                 print(f"\t-\t{self.filename} -ht <title>\tChange the title for the header file's header\n\t\t\t(by default: header)")
-                print(f"\t-\t{self.filename} -hd <description>\tChange the description for the header file's description\n\t\t\t(by default: jitter jitter)")
+                print(
+                    f"\t-\t{self.filename} -hd <description>\tChange the description for the header file's description\n\t\t\t(by default: jitter jitter)")
                 print(f"\t-\t{self.filename} -mt <title>\tChange the title for the makefile header\n\t\t\t(by default: Makefile)")
-                print(f"\t-\t{self.filename} -md <description>\tChange the description for the makefile's description\n\t\t\t(by default: jitter jitter)")
-                print(f"\t-\t{self.filename} -mgdb <0 or 1>\tChoose to input (1) or not (0) a ligne to compile with debugging options\n\t\t\t(by default: 0)")
+                print(
+                    f"\t-\t{self.filename} -md <description>\tChange the description for the makefile's description\n\t\t\t(by default: jitter jitter)")
+                print(
+                    f"\t-\t{self.filename} -mgdb <0 or 1>\tChoose to input (1) or not (0) a ligne to compile with debugging options\n\t\t\t(by default: 0)")
                 print(f"\t-\t{self.filename} -cf <0 or 1>\tChange if to add (1) or not (0) the csfml libraries required for graphical compilation with the csfml library.")
-                print(f"\t-\t{self.filename} -o <no_space_name>\tChange the output name of the generated file after compilation\n\t\t\t(the default name is a.out)")
-                print(f"\t-\t{self.filename} -ccsfml <0 or 1>\tCheck (1) or not (0) for csfml function declarations.\n\t\t\t(by default: 0)")
+                print(
+                    f"\t-\t{self.filename} -o <no_space_name>\tChange the output name of the generated file after compilation\n\t\t\t(the default name is a.out)")
+                print(
+                    f"\t-\t{self.filename} -ccsfml <0 or 1>\tCheck (1) or not (0) for csfml function declarations.\n\t\t\t(by default: 0)")
                 print(f"\t-\t{self.filename} -co\tClean the object files during the compilation.")
                 print(f"\t-\t{self.filename} -s \tSilence the makefile.")
                 print(f"\t-\t{self.filename} -nm\tDo not generate a makefile.")
@@ -277,14 +298,12 @@ class get_launch_arguments(root):
                 if (self.argv[i+1][0] != '-'):
                     self.headerfile_header_title = self.argv[i+1]
 
-
     def get_header_file_header_description(self):
         """ Check and get if the description of the header of the headerfile has changed """
         for i in range(self.argc):
             if (("-md" == self.argv[i].lower()) and (i+1 <= self.argc-1)):
                 if (self.argv[i+1][0] != '-'):
                     self.headerfile_header_description = self.argv[i+1]
-
 
     def check_if_to_include_csfml_flags(self):
         """ Get the status of the csfml flags """
@@ -293,7 +312,7 @@ class get_launch_arguments(root):
                 if (self.argv[i+1][0] != '-'):
                     try:
                         self.headerfile_header_description = int(self.argv[i+1])
-                    except ConversionError :
+                    except ConversionError:
                         print("Failed to get the info for the csfml flags, they will thus, not be put into the makefile.")
 
     def makefile_bin_name(self):
@@ -310,7 +329,7 @@ class get_launch_arguments(root):
                 if (self.argv[i+1][0] != '-'):
                     try:
                         self.makefile_debug_line = int(self.argv[i+1])
-                    except ConversionError :
+                    except ConversionError:
                         print("Failed to get the info for the debug line, it will thus, not be put into the makefile.")
 
     def check_for_csfml(self):
@@ -320,7 +339,7 @@ class get_launch_arguments(root):
                 if (self.argv[i+1][0] != '-'):
                     try:
                         self.check_for_csfml_declarations = int(self.argv[i+1])
-                    except ConversionError :
+                    except ConversionError:
                         print("Failed to get the info csfml calls, it will thus, not be taken into account.")
 
     def create_makefile(self):
@@ -347,6 +366,7 @@ class get_launch_arguments(root):
             if ("-co" == self.argv[i].lower()):
                 self.clean_object_files = True
 
+
 class color(root):
     def display(self, color):
         if (self.colorise_output == True):
@@ -356,16 +376,18 @@ class color(root):
                 os.system(f"echo -e \"{self.color_pallet[color]}\"")
 
     def init_pallet(self):
-        if (self.wich_system != "Windows") :
-            color_list = ["0 = 30","1 = 34","2 = 32","3 = 36","4 = 31","5 = 35","6 = 33","7 = 37","8 = 90","9 = 94","a = 92","b = 96","c = 91","d = 95","e = 93","f = 97","0"]
-            color_list = ["30","34","32","36","31","35","33","37","90","94","92","96","91","95","93","97","0"]
-            g=h=0
+        if (self.wich_system != "Windows"):
+            color_list = ["0 = 30", "1 = 34", "2 = 32", "3 = 36", "4 = 31", "5 = 35", "6 = 33", "7 = 37",
+                          "8 = 90", "9 = 94", "a = 92", "b = 96", "c = 91", "d = 95", "e = 93", "f = 97", "0"]
+            color_list = ["30", "34", "32", "36", "31", "35", "33", "37",
+                          "90", "94", "92", "96", "91", "95", "93", "97", "0"]
+            g = h = 0
             for i in "0123456789ABCDEFr":
-                h=0
+                h = 0
                 for b in "0123456789ABCDEFr":
-                    self.color_pallet[f"{i}{b}"]=f"\\e[{color_list[g]}m\\e[{int(color_list[h])+10}m"
-                    h+=1
-                g+=1
+                    self.color_pallet[f"{i}{b}"] = f"\\e[{color_list[g]}m\\e[{int(color_list[h])+10}m"
+                    h += 1
+                g += 1
         else:
             for i in "0123456789ABCDEFr":
                 for b in "0123456789ABCDEFr":
@@ -380,8 +402,9 @@ class color(root):
                         self.color_pallet[f"{i}{b}"] = f"color {i}{b}"
 
 
-RI = root(__NAME__,__LANG__,__VERSION__,__AUTHOR__,len(sys.argv),sys.argv)
+RI = root(__NAME__, __LANG__, __VERSION__, __AUTHOR__, len(sys.argv), sys.argv)
 PI = get_file_data("declarations/c.mc", "declarations/csfml.mc")
+
 
 def get_folders(scan_dir, dir_list):
     """ recursively list all the directory's and sub directory's of the specified path """
@@ -391,6 +414,7 @@ def get_folders(scan_dir, dir_list):
             dir_list.append(d)
             get_folders(d, dir_list)
     return dir_list
+
 
 def check_inputs(self):
     """ check the possible inputs at call of the program """
@@ -416,6 +440,7 @@ def check_inputs(self):
     get_launch_arguments.clean_object_files_for_the_makefile(self)
     return False
 
+
 def main():
     # print(RI.argv)
     if (RI.argc > 1):
@@ -438,5 +463,6 @@ def main():
     print("Done.")
     print("Program (c) Created by Henry Letellier")
     # color.display(RI, "rr")
+
 
 main()
