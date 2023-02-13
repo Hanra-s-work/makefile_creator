@@ -6,15 +6,11 @@
 ##
 
 import os
-
-try:
-    from . import CONST
-except ImportError:
-    import constants as CONST
+from .constants import Const as CONST
 
 class Root:
     """ Functions used by everyone """
-    def __init__(self, error:int=CONST.ERROR, success:int=CONST.SUCCESS) -> None:
+    def __init__(self, error:int=CONST().ERROR, success:int=CONST().SUCCESS) -> None:
         """ The global variables """
         self.success = success
         self.error = error
@@ -41,7 +37,7 @@ class Root:
     def env_to_dict(self, string:str) -> list[int, dict]:
         """ Convert an env file to a dict string """
         result = dict()
-        result["status"] = CONST.SUCCESS
+        result["status"] = CONST().SUCCESS
         result["content"] = ""
         final_list = dict()
         try:
@@ -52,7 +48,7 @@ class Root:
                     final_list[i[0]] = i[1]
             result["content"] = final_list
         except Exception as error:
-            result['status'] = CONST.ERROR
+            result['status'] = CONST().ERROR
             result['content'] = {"error": str(error)}
         return result
 

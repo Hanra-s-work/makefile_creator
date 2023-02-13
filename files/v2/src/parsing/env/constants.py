@@ -5,26 +5,26 @@
 ## constants.py
 ##
 
-ERR = 84
-ERROR = 84
-SUCCESS = 0
-
-JSON_CONFIG = "config.json"
-ENV_FILE = ".env"
-
-__Name__ = "env++"
-__Author__ = f"{chr(169)} Henry Letellier"
-__Version__ = "1.0.0"
-__Licence__ = f"""
+class Const:
+    """ The class containing the constants of the env module """
+    def __init__(self) -> None:
+        self.ERR = 84
+        self.ERROR = 84
+        self.SUCCESS = 0
+        self.ENV_FILE = ".env"
+        self.JSON_CONFIG = "config.json"
+        self.__Name__ = "env++"
+        self.__Author__ = f"{chr(169)} Henry Letellier"
+        self.__Version__ = "1.0.0"
+        self.__Licence__ = f"""
 This program is provided as if and without any warranty.
-The Author, {__Author__}, cannot be held responsible for any damage occurring on your computer.
+The Author, {self.__Author__}, cannot be held responsible for any damage occurring on your computer.
 The only provided warranty, is that this program, if downloaded from its original creator, and if it has been untouched, will be garrantied to work.
 Use at your own risk.
 Feel free to edit this program.
-Quoting the original author {__Author__} would be appreciated.
+Quoting the original author {self.__Author__} would be appreciated.
 """
-
-__env_usage__ = """
+        self.__env_usage__ = """
 USING THE .env FILE:
 
 The .env file, contains a series a variables that you do not
@@ -57,12 +57,9 @@ line, then call it in another variable using this syntax:
 
 COMMENTING A VARIABLE:
 
-Add a '#' in front of a variable, for it to be ignored by the
-program.
-
+Add a '#' in front of a variable, for it to be ignored by the program.
 """
-
-__Description__ = f"""
+        self.__Description__ = f"""
 OVERVIEW:
 
 This module aims to func up the env processing by adding
@@ -71,7 +68,6 @@ the environement file as well as defining environement
 environement variables and calling them within
 the environement file.
 
-{__env_usage__}
+{self.__env_usage__}
 """
-
-__DESCRIPTION__ = __Description__
+        self.__DESCRIPTION__ = self.__Description__

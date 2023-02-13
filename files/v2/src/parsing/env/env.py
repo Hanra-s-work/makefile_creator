@@ -7,17 +7,12 @@
 
 import os
 import platform
-
-try:
-    from .. import CONST
-    from .. import Root
-except ImportError:
-    import constants as CONST
-    from root import Root
+from .constants import Const as CONST
+from .root import Root
 
 class Environment:
     """ Class in charge of processing the .env file """
-    def __init__(self, error:int=CONST.ERROR, success:int=CONST.SUCCESS, env_file:str=CONST.ENV_FILE):
+    def __init__(self, error:int=CONST().ERROR, success:int=CONST().SUCCESS, env_file:str=CONST().ENV_FILE):
         """ The global variables """
         self.author = f"{chr(169)} Henry Letellier"
         self.error = error
@@ -154,8 +149,8 @@ class Environment:
         if self.ri.is_string_empty(env_file) == True or self.ri.is_string_only_blanks(env_file) == True:
             if self.ri.is_string_empty(self.env_file) == False and self.ri.is_string_only_blanks(self.env_file) == False:
                 env_file = self.env_file
-            elif self.ri.is_string_empty(CONST.ENV_FILE) == False and self.ri.is_string_only_blanks(CONST.ENV_FILE) == False:
-                env_file = CONST.ENV_FILE
+            elif self.ri.is_string_empty(CONST().ENV_FILE) == False and self.ri.is_string_only_blanks(CONST().ENV_FILE) == False:
+                env_file = CONST().ENV_FILE
             else:
                 env_content["status"] = self.error
                 env_content["content"] = "The env filepath is empty"
@@ -168,5 +163,5 @@ class Environment:
             else:
                 env_content["content"] = f"env_to_dict: {env_content['content']}"
         else:
-            env_content = {"status": CONST.ERROR, "content": "File not found"}
+            env_content = {"status": CONST().ERROR, "content": "File not found"}
         return env_content

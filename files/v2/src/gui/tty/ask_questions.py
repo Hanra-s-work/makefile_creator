@@ -18,7 +18,7 @@ __Author__ = "(c) Henry Letellier"
 from string import printable
 class AskQuestion:
     """ An advanced function that contains boiling to gain time when asking a question """
-    def __init__(self, human_type:dict={}, illegal_characters_nb:str="") -> None:
+    def __init__(self, human_type:dict=..., illegal_characters_nb:str="") -> None:
         """ The globals for the class """
         self.human_type = human_type
         self.illegal_characters_nb = illegal_characters_nb

@@ -41,5 +41,7 @@
         "yml",
         "COBOL",
         "ACUCOBOL"
-    ]
+    ],
+    "python.analysis.typeCheckingMode": "basic",
+    "python.formatting.provider": "yapf"
 }
