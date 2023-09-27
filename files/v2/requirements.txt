@@ -1,2 +1,2 @@
 colorama == 0.4.6 
-ask-question == 1.1.0
+ask-question ==1.2.4
